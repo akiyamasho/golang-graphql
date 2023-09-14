@@ -2,7 +2,6 @@ package main
 
 import (
 	"graphtest/graph"
-	"graphtest/graph/model"
 	"log"
 	"net/http"
 	"os"
@@ -19,15 +18,7 @@ func main() {
 		port = defaultPort
 	}
 
-	todos := []*model.Todo{}
-
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(
-		graph.Config{
-			Resolvers: &graph.Resolver{
-				TodoList: todos,
-			},
-		},
-	))
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)
